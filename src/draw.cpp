@@ -16,11 +16,11 @@ void ground(int height) {
 void dino(int x_position, int y_position, int height) {
 
     const char *dino = "                __ \n"
-                       "               / o)\n"
-                       "      _.-DD-._/ /  \n"
+                       "               / -)\n"
+                       "      _.----._/ /  \n"
                        "     /         /   \n"
-                       "  __/ (  | (  |    \n"
-                       " /__.-'|m|--|m|    \n";
+                       "  __/         |    \n"
+                       " /_____|_|--|_|    \n";
 
     mvprintw(y_position, x_position, "%s", dino);
     move(height, 0);
