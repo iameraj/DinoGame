@@ -13,6 +13,7 @@ class Background {
         width = w;
         delay = d;
     }
+    void show_detail(int score) { mvprintw(0, 0, "Score : %d", score); }
     void draw_ground() {
 
         for (int i = 0; i < width; i++) {
@@ -38,9 +39,6 @@ class Obstacles : public Background {
     int get_obstacle_height() { return this->obstacle_height; }
     int get_obstacle_width() { return this->obstacle_width; }
     void move_obstacle(int pace);
-    void show_detail() {
-        mvprintw(0, 0, "Obstackle is : %d", obstacle_x_coordinate);
-    }
 };
 void Obstacles::move_obstacle(int pace) {
     // This method moves the obstacle to the left

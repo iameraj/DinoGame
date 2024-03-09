@@ -1,5 +1,7 @@
 #include "./background.cpp"
 #include "./dino.cpp"
+#include "./game.cpp"
+#include <iostream>
 #include <ncurses.h>
 #define delay 12
 #define mass 2
@@ -30,10 +32,18 @@ int main(int argc, char **argv) {
     // Initailizing the Obstacle
     Obstacles *tree = new Obstacles(max_x, 7, 3, height, max_x, delay);
 
-    // Animation logic goes here
+    // Initializing the Game
+    Game player(height);
 
+    // Animation logic goes here
     while (1) {
 
+        // Write the loss check logic here
+        if (player.is_alive(dino.get_y_coordinate(), tree->get_x_coordinate(),
+                            tree->get_obstacle_height())) {
+            player.set_score(player.get_score() + 1);
+        } else {
+        }
         // If the tree is to the extreme left of the screen
         // we will delete that tree and create a new one
         // for now ?
@@ -52,8 +62,8 @@ int main(int argc, char **argv) {
             dino.move_dino(0.0);
         }
         tree->move_obstacle(1);
-        tree->show_detail();
         bg->draw_ground();
+        bg->show_detail(player.get_score());
 
         refresh();
         wrefresh(win);
@@ -62,6 +72,11 @@ int main(int argc, char **argv) {
     endwin();
 
     delete tree;
+
+    clear();
+    std::cout << "\nYour score: " << player.get_score();
+
+    std::cout << "\nBye" << std::endl;
 
     return 0;
 }
