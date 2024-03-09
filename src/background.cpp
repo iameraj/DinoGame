@@ -1,5 +1,8 @@
 #pragma once
+#include <cstdlib>
+#include <ctime>
 #include <ncurses.h>
+#include <string>
 
 class Background {
   protected:
@@ -31,9 +34,12 @@ class Obstacles : public Background {
     int obstacle_width;
 
   public:
-    Obstacles(int ox, int oh, int ow, int h, int w, int d)
-        : Background(h, w, d), obstacle_x_coordinate(ox), obstacle_height(oh),
-          obstacle_width(ow) {}
+    Obstacles(int ox, int h, int w, int d)
+        : Background(h, w, d), obstacle_x_coordinate(ox) {
+        srand(time(0));
+        obstacle_height = 5 + (rand() % 7);
+        obstacle_width = 2 + (rand() % 7);
+    }
 
     int get_x_coordinate() { return this->obstacle_x_coordinate; }
     int get_obstacle_height() { return this->obstacle_height; }
@@ -45,15 +51,18 @@ void Obstacles::move_obstacle(int pace) {
     // and then draws it to the screen
 
     // Clearing the old tree before printing the new one
-    const char *free = "   ";
+
+    std::string free = std::string(obstacle_width, ' ');
+    const char *free_str = free.c_str();
     for (int i = 0; i < obstacle_height; i++) {
-        mvprintw(height - i, obstacle_x_coordinate, "%s", free);
+        mvprintw(height - i, obstacle_x_coordinate, "%s", free_str);
     };
 
     obstacle_x_coordinate = obstacle_x_coordinate - pace;
-    const char *tree = "###";
+    std::string tree = std::string(obstacle_width, '#');
+    const char *tree_str = tree.c_str();
     for (int i = 0; i < obstacle_height; i++) {
-        mvprintw(height - i, obstacle_x_coordinate, "%s", tree);
+        mvprintw(height - i, obstacle_x_coordinate, "%s", tree_str);
     };
     move(0, 0);
 }

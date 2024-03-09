@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     Background *bg = new Background(height, max_x - 1, delay);
 
     // Initailizing the Obstacle
-    Obstacles *tree = new Obstacles(max_x, 7, 3, height, max_x, delay);
+    Obstacles *tree = new Obstacles(max_x, height, max_x, delay);
 
     // Initializing the Game
     Game player(height);
@@ -43,18 +43,19 @@ int main(int argc, char **argv) {
                             tree->get_obstacle_height())) {
             player.set_score(player.get_score() + 1);
         } else {
+            break;
         }
         // If the tree is to the extreme left of the screen
         // we will delete that tree and create a new one
         // for now ?
         if (tree->get_x_coordinate() < 0) {
             delete tree;
-            tree = new Obstacles(max_x - 3, 7, 3, height, max_x, delay);
+            tree = new Obstacles(max_x - 3, height, max_x, delay);
         } // Drawing the ground
 
         // Getting user input to move our Dinasaur
         int ch = getch();
-        if (ch == KEY_UP || ch == 'k' || ch == 'w') {
+        if (ch == KEY_UP || ch == 'k' || ch == 'w' || ch == ' ') {
             dino.move_dino(-25);
         } else if (ch == 'q') {
             break; // Exit the loop if 'q' is pressed
